@@ -1,6 +1,7 @@
 package com.ruoyi.user.service;
 
 import com.ruoyi.admin.domain.DevUser;
+import com.ruoyi.admin.domain.EnrollDTO;
 
 public interface IUserService {
 
@@ -10,4 +11,8 @@ public interface IUserService {
      * @return
      */
     DevUser userLogin(DevUser devUser);
+
+    int updateUser(DevUser devUser);
+
+    int insertEnroll(EnrollDTO enrollDTO);
 }

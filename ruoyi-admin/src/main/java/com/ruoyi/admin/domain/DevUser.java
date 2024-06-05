@@ -32,7 +32,46 @@ public class DevUser extends BaseEntity
     private String userName;
 
     /** 密码 */
+    @Excel(name = "密码")
     private String password;
+
+    /** 团队成员 */
+    @Excel(name = "团队成员")
+    private String team;
+
+    /** 联系方式 */
+    @Excel(name = "联系方式")
+    private String phone;
+
+    /** 参赛资格 */
+    @Excel(name = "参赛资格")
+    private int qualification;
+
+
+
+    public int getQualification() {
+        return qualification;
+    }
+
+    public void setQualification(int qualification) {
+        this.qualification = qualification;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     /** ID */
     private Long id;
@@ -107,14 +146,18 @@ public class DevUser extends BaseEntity
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("name", getName())
-            .append("identity", getIdentity())
-            .append("school", getSchool())
-            .append("userName", getUserName())
-            .append("password", getPassword())
-            .append("id", getId())
-            .append("groupName", getGroupName())
-            .toString();
+        return "DevUser{" +
+                "name='" + name + '\'' +
+                ", identity='" + identity + '\'' +
+                ", school='" + school + '\'' +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", team='" + team + '\'' +
+                ", phone='" + phone + '\'' +
+                ", qualification=" + qualification +
+                ", id=" + id +
+                ", groupName='" + groupName + '\'' +
+                '}';
     }
+
 }

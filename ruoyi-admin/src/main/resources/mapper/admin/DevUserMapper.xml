@@ -61,6 +61,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="userName != null and userName != ''">user_name = #{userName},</if>
             <if test="password != null and password != ''">password = #{password},</if>
             <if test="groupName != null">group_name = #{groupName},</if>
+            <if test="team != null">team = #{team},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="qualification != null">qualification = #{qualification},</if>
         </trim>
         where id = #{id}
     </update>

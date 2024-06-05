@@ -1,6 +1,7 @@
 package com.ruoyi.user.controller;
 
 import com.ruoyi.admin.domain.DevUser;
+import com.ruoyi.admin.domain.EnrollDTO;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -39,4 +40,17 @@ public class UserController extends BaseController {
         }
         return success(user);
     }
+
+    /**
+     * 用户修改密码
+     */
+    @PreAuthorize("@ss.hasPermi('user:user:edit')")
+    @Log(title = "用户信息修改", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public AjaxResult edit(@RequestBody DevUser devUser)
+    {
+        return toAjax(userService.updateUser(devUser));
+    }
+
+
 }
