@@ -52,5 +52,14 @@ public class UserController extends BaseController {
         return toAjax(userService.updateUser(devUser));
     }
 
-
+    /**
+     * 用户报名
+     */
+    @PreAuthorize("@ss.hasPermi('user:user:add')")
+    @Log(title = "用户报名", businessType = BusinessType.INSERT)
+    @PutMapping
+    public AjaxResult add(@RequestBody EnrollDTO enrollDTO)
+    {
+        return toAjax(userService.insertEnroll(enrollDTO));
+    }
 }
