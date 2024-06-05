@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.admin.mapper.DevEntriesMapper">
+    
+    <resultMap type="DevEntries" id="DevEntriesResult">
+        <result property="entries"    column="entries"    />
+        <result property="entriesId"    column="entries_id"    />
+        <result property="phone"    column="phone"    />
+        <result property="score"    column="score"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <resultMap id="DevEntriesDevUserResult" type="DevEntries" extends="DevEntriesResult">
+        <collection property="devUserList" ofType="DevUser" column="id" select="selectDevUserList" />
+    </resultMap>
+
+    <resultMap type="DevUser" id="DevUserResult">
+        <result property="name"    column="name"    />
+        <result property="identity"    column="identity"    />
+        <result property="school"    column="school"    />
+        <result property="userName"    column="user_name"    />
+        <result property="password"    column="password"    />
+        <result property="id"    column="id"    />
+        <result property="groupName"    column="group_name"    />
+    </resultMap>
+
+    <sql id="selectDevEntriesVo">
+        select entries, entries_id, phone, score, user_id, create_time from dev_entries
+    </sql>
+
+    <select id="selectDevEntriesList" parameterType="DevEntries" resultMap="DevEntriesResult">
+        <include refid="selectDevEntriesVo"/>
+        <where>  
+            <if test="entries != null  and entries != ''"> and entries = #{entries}</if>
+        </where>
+    </select>
+    
+    <select id="selectDevEntriesByEntriesId" parameterType="Long" resultMap="DevEntriesDevUserResult">
+        select entries, entries_id, phone, score, user_id, create_time
+        from dev_entries
+        where entries_id = #{entriesId}
+    </select>
+
+    <select id="selectDevUserList" resultType="DevUser" resultMap="DevUserResult">
+        select name, identity, school, user_name, password, id, group_name
+        from dev_user
+        where id = #{id}
+    </select>
+
+    <select id="getList" resultType="com.ruoyi.admin.domain.EntriesDTO">
+        select u.school,u.group_name,e.entries,u.name,e.phone,e.score,e.create_time
+        from dev_user u,dev_entries e
+        where u.id = e.user_id
+    </select>
+
+    <insert id="insertDevEntries" parameterType="DevEntries">
+        insert into dev_entries
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="entries != null and entries != ''">entries,</if>
+            <if test="entriesId != null">entries_id,</if>
+            <if test="phone != null">phone,</if>
+            <if test="score != null">score,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="entries != null and entries != ''">#{entries},</if>
+            <if test="entriesId != null">#{entriesId},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="score != null">#{score},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDevEntries" parameterType="DevEntries">
+        update dev_entries
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="entries != null and entries != ''">entries = #{entries},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where entries_id = #{entriesId}
+    </update>
+
+    <delete id="deleteDevEntriesByEntriesId" parameterType="Long">
+        delete from dev_entries where entries_id = #{entriesId}
+    </delete>
+
+    <delete id="deleteDevEntriesByEntriesIds" parameterType="String">
+        delete from dev_entries where entries_id in 
+        <foreach item="entriesId" collection="array" open="(" separator="," close=")">
+            #{entriesId}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteDevUserByIds" parameterType="String">
+        delete from dev_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteDevUserById" parameterType="Long">
+        delete from dev_user where id = #{id}
+    </delete>
+
+    <insert id="batchDevUser">
+        insert into dev_user( name, identity, school, user_name, password, id, group_name) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.name}, #{item.identity}, #{item.school}, #{item.userName}, #{item.password}, #{item.id}, #{item.groupName})
+        </foreach>
+    </insert>
+</mapper>
