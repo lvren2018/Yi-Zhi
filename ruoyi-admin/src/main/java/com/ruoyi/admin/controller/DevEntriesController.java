@@ -52,7 +52,18 @@ public class DevEntriesController extends BaseController
 
     }
 
-
+    /**
+     * 导出作品管理列表
+     */
+    @PreAuthorize("@ss.hasPermi('admin:entries:export')")
+    @Log(title = "作品管理", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    public void export(HttpServletResponse response, DevEntries devEntries)
+    {
+        List<DevEntries> list = devEntriesService.selectDevEntriesList(devEntries);
+        ExcelUtil<DevEntries> util = new ExcelUtil<DevEntries>(DevEntries.class);
+        util.exportExcel(response, list, "作品管理数据");
+    }
 
     /**
      * 获取作品管理详细信息
