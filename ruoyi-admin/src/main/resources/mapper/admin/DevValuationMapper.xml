@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.admin.mapper.DevValuationMapper">
+    
+    <resultMap type="DevValuation" id="DevValuationResult">
+        <result property="id"    column="id"    />
+        <result property="teachingImplementationScore"    column="teaching_implementation_score"    />
+        <result property="teachingPlanScore"    column="teaching_plan_score"    />
+        <result property="videoMaterialsScore"    column="video_materials_score"    />
+        <result property="trainingPlanScore"    column="training_plan_score"    />
+        <result property="curriculumCriterionScore"    column="curriculum_criterion_score"    />
+        <result property="textbookSelectionScore"    column="textbook_selection_score"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="entriesId"    column="entries_id"    />
+        <result property="createName"    column="create_name"    />
+    </resultMap>
+
+    <resultMap id="DevValuationDevEntriesResult" type="DevValuation" extends="DevValuationResult">
+        <collection property="devEntriesList" ofType="DevEntries" column="entries_id" select="selectDevEntriesList" />
+    </resultMap>
+
+    <resultMap type="DevEntries" id="DevEntriesResult">
+        <result property="entries"    column="entries"    />
+        <result property="entriesId"    column="entries_id"    />
+        <result property="phone"    column="phone"    />
+        <result property="score"    column="score"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectDevValuationVo">
+        select id, teaching_implementation_score, teaching_plan_score, video_materials_score, training_plan_score, curriculum_criterion_score, textbook_selection_score, create_time, entries_id, create_name from dev_valuation
+    </sql>
+
+    <select id="selectDevValuationList" parameterType="DevValuation" resultMap="DevValuationResult">
+        <include refid="selectDevValuationVo"/>
+        <where>  
+            <if test="teachingImplementationScore != null "> and teaching_implementation_score = #{teachingImplementationScore}</if>
+            <if test="teachingPlanScore != null "> and teaching_plan_score = #{teachingPlanScore}</if>
+            <if test="videoMaterialsScore != null "> and video_materials_score = #{videoMaterialsScore}</if>
+            <if test="trainingPlanScore != null "> and training_plan_score = #{trainingPlanScore}</if>
+            <if test="curriculumCriterionScore != null "> and curriculum_criterion_score = #{curriculumCriterionScore}</if>
+            <if test="textbookSelectionScore != null "> and textbook_selection_score = #{textbookSelectionScore}</if>
+            <if test="entriesId != null "> and entries_id = #{entriesId}</if>
+            <if test="createName != null  and createName != ''"> and create_name like concat('%', #{createName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectDevValuationById" parameterType="Long" resultMap="DevValuationDevEntriesResult">
+        select id, teaching_implementation_score, teaching_plan_score, video_materials_score, training_plan_score,
+               curriculum_criterion_score, textbook_selection_score, create_time, entries_id, create_name
+        from dev_valuation
+        where id = #{id}
+    </select>
+
+    <select id="selectDevEntriesList" resultType="DevEntries" resultMap="DevEntriesResult">
+        select entries, entries_id, phone, score, user_id, create_time
+        from dev_entries
+        where entries_id = #{entries_id}
+    </select>
+
+    <select id="getList" resultType="com.ruoyi.admin.domain.ValuationDTO">
+        select du.school,de.entries,dv.create_name,
+               dv.teaching_implementation_score,
+               dv.teaching_plan_score,
+               dv.video_materials_score,
+               dv.training_plan_score,
+               dv.curriculum_criterion_score,
+               dv.textbook_selection_score,
+               dv.teaching_implementation_score +
+               dv.teaching_plan_score +
+               dv.video_materials_score +
+               dv.training_plan_score +
+               dv.curriculum_criterion_score +
+               dv.textbook_selection_score as score
+        from dev_valuation dv, dev_entries de, dev_user du
+        where dv.entries_id = de.entries_id and de.user_id = du.id
+    </select>
+
+    <insert id="insertDevValuation" parameterType="DevValuation" useGeneratedKeys="true" keyProperty="id">
+        insert into dev_valuation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teachingImplementationScore != null">teaching_implementation_score,</if>
+            <if test="teachingPlanScore != null">teaching_plan_score,</if>
+            <if test="videoMaterialsScore != null">video_materials_score,</if>
+            <if test="trainingPlanScore != null">training_plan_score,</if>
+            <if test="curriculumCriterionScore != null">curriculum_criterion_score,</if>
+            <if test="textbookSelectionScore != null">textbook_selection_score,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="entriesId != null">entries_id,</if>
+            <if test="createName != null">create_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teachingImplementationScore != null">#{teachingImplementationScore},</if>
+            <if test="teachingPlanScore != null">#{teachingPlanScore},</if>
+            <if test="videoMaterialsScore != null">#{videoMaterialsScore},</if>
+            <if test="trainingPlanScore != null">#{trainingPlanScore},</if>
+            <if test="curriculumCriterionScore != null">#{curriculumCriterionScore},</if>
+            <if test="textbookSelectionScore != null">#{textbookSelectionScore},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="entriesId != null">#{entriesId},</if>
+            <if test="createName != null">#{createName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDevValuation" parameterType="DevValuation">
+        update dev_valuation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="teachingImplementationScore != null">teaching_implementation_score = #{teachingImplementationScore},</if>
+            <if test="teachingPlanScore != null">teaching_plan_score = #{teachingPlanScore},</if>
+            <if test="videoMaterialsScore != null">video_materials_score = #{videoMaterialsScore},</if>
+            <if test="trainingPlanScore != null">training_plan_score = #{trainingPlanScore},</if>
+            <if test="curriculumCriterionScore != null">curriculum_criterion_score = #{curriculumCriterionScore},</if>
+            <if test="textbookSelectionScore != null">textbook_selection_score = #{textbookSelectionScore},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="entriesId != null">entries_id = #{entriesId},</if>
+            <if test="createName != null">create_name = #{createName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDevValuationById" parameterType="Long">
+        delete from dev_valuation where id = #{id}
+    </delete>
+
+    <delete id="deleteDevValuationByIds" parameterType="String">
+        delete from dev_valuation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteDevEntriesByEntriesIds" parameterType="String">
+        delete from dev_entries where entries_id in 
+        <foreach item="entriesId" collection="array" open="(" separator="," close=")">
+            #{entriesId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteDevEntriesByEntriesId" parameterType="Long">
+        delete from dev_entries where entries_id = #{entriesId}
+    </delete>
+
+    <insert id="batchDevEntries">
+        insert into dev_entries( entries, entries_id, phone, score, user_id, create_time) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.entries}, #{item.entriesId}, #{item.phone}, #{item.score}, #{item.userId}, #{item.createTime})
+        </foreach>
+    </insert>
+</mapper>
