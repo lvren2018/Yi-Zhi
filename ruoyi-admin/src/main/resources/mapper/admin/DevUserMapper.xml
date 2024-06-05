@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.admin.mapper.DevUserMapper">
+    
+    <resultMap type="DevUser" id="DevUserResult">
+        <result property="name"    column="name"    />
+        <result property="identity"    column="identity"    />
+        <result property="school"    column="school"    />
+        <result property="userName"    column="user_name"    />
+        <result property="password"    column="password"    />
+        <result property="id"    column="id"    />
+        <result property="groupName"    column="group_name"    />
+    </resultMap>
+
+    <sql id="selectDevUserVo">
+        select name, identity, school, user_name, password, id, group_name from dev_user
+    </sql>
+
+    <select id="selectDevUserList" parameterType="DevUser" resultMap="DevUserResult">
+        <include refid="selectDevUserVo"/>
+        <where>  
+            <if test="identity != null  and identity != ''"> and identity = #{identity}</if>
+            <if test="school != null  and school != ''"> and school = #{school}</if>
+            <if test="groupName != null  and groupName != ''"> and group_name like concat('%', #{groupName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectDevUserById" parameterType="Long" resultMap="DevUserResult">
+        <include refid="selectDevUserVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDevUser" parameterType="DevUser" useGeneratedKeys="true" keyProperty="id">
+        insert into dev_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="identity != null and identity != ''">identity,</if>
+            <if test="school != null and school != ''">school,</if>
+            <if test="userName != null and userName != ''">user_name,</if>
+            <if test="password != null and password != ''">password,</if>
+            <if test="groupName != null">group_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="identity != null and identity != ''">#{identity},</if>
+            <if test="school != null and school != ''">#{school},</if>
+            <if test="userName != null and userName != ''">#{userName},</if>
+            <if test="password != null and password != ''">#{password},</if>
+            <if test="groupName != null">#{groupName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDevUser" parameterType="DevUser">
+        update dev_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="identity != null and identity != ''">identity = #{identity},</if>
+            <if test="school != null and school != ''">school = #{school},</if>
+            <if test="userName != null and userName != ''">user_name = #{userName},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="groupName != null">group_name = #{groupName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDevUserById" parameterType="Long">
+        delete from dev_user where id = #{id}
+    </delete>
+
+    <delete id="deleteDevUserByIds" parameterType="String">
+        delete from dev_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
