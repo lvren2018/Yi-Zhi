@@ -11,7 +11,10 @@ import com.ruoyi.user.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,6 +26,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/user/user")
 public class UserController extends BaseController {
+
+    private String uploadPath = "E:\\LvRen2018\\Java\\RuoYi-Vue\\file";
 
     @Autowired
     private IUserService userService;
@@ -58,8 +63,28 @@ public class UserController extends BaseController {
     @PreAuthorize("@ss.hasPermi('user:user:add')")
     @Log(title = "用户报名", businessType = BusinessType.INSERT)
     @PutMapping("/signup")
-    public AjaxResult add(@RequestBody EnrollDTO enrollDTO)
+    public AjaxResult add(@RequestBody EnrollDTO enrollDTO, @RequestParam("file") MultipartFile file)
     {
         return toAjax(userService.insertEnroll(enrollDTO));
+    }
+
+    /**
+     * 报名文件上传
+     */
+    @PreAuthorize("@ss.hasPermi('user:user:add')")
+    @Log(title = "用户报名", businessType = BusinessType.INSERT)
+    @PostMapping("/upload")
+    public AjaxResult upload(@RequestParam("file") MultipartFile file){
+        // 文件保存路径
+        String filePath = uploadPath + File.separator + file.getOriginalFilename();
+        File dest = new File(filePath);
+
+        // 保存文件
+        try {
+            file.transferTo(dest);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return success(filePath);
     }
 }
