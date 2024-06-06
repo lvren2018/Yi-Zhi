@@ -109,6 +109,15 @@ public class UserController extends BaseController {
         return getDataTable(list);
     }
 
-
+    /**
+     * 用户端作品评价
+     */
+    @PreAuthorize("@ss.hasPermi('user:valuation:add')")
+    @Log(title = "用户端作品评价", businessType = BusinessType.INSERT)
+    @PostMapping("/valuation")
+    public AjaxResult add(@RequestBody DevValuation devValuation)
+    {
+        return toAjax(devValuationService.insertDevValuation(devValuation));
+    }
 }
 
