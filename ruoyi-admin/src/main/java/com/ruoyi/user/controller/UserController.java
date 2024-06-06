@@ -57,7 +57,7 @@ public class UserController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('user:user:add')")
     @Log(title = "用户报名", businessType = BusinessType.INSERT)
-    @PutMapping
+    @PutMapping("/signup")
     public AjaxResult add(@RequestBody EnrollDTO enrollDTO)
     {
         return toAjax(userService.insertEnroll(enrollDTO));
