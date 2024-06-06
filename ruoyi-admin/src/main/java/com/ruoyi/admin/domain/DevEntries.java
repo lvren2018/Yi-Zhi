@@ -1,6 +1,8 @@
 package com.ruoyi.admin.domain;
 
 import java.util.List;
+
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -17,25 +19,27 @@ public class DevEntries extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 作品名 */
+    @ApiModelProperty(value = "作品名")
     @Excel(name = "作品名")
     private String entries;
 
     /** 主键 */
+    @ApiModelProperty(value = "ID")
     private Long entriesId;
 
     /** 联系方式 */
+    @ApiModelProperty(value = "联系方式")
     @Excel(name = "联系方式")
     private String phone;
 
     /** 实时平均分 */
+    @ApiModelProperty(value = "平均分")
     @Excel(name = "实时平均分")
     private Long score;
 
     /** 账号ID */
+    @ApiModelProperty(value = "账号ID")
     private Long userId;
-
-    /** 账户管理信息 */
-    private List<DevUser> devUserList;
 
     public void setEntries(String entries) 
     {
@@ -83,16 +87,6 @@ public class DevEntries extends BaseEntity
         return userId;
     }
 
-    public List<DevUser> getDevUserList()
-    {
-        return devUserList;
-    }
-
-    public void setDevUserList(List<DevUser> devUserList)
-    {
-        this.devUserList = devUserList;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -102,7 +96,6 @@ public class DevEntries extends BaseEntity
             .append("score", getScore())
             .append("userId", getUserId())
             .append("createTime", getCreateTime())
-            .append("devUserList", getDevUserList())
             .toString();
     }
 }

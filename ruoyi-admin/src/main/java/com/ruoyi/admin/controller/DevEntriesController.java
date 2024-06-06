@@ -4,6 +4,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.admin.domain.EntriesDTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +32,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author 曾令根
  * @date 2024-06-05
  */
+@Api(tags = "作品管理接口")
 @RestController
 @RequestMapping("/admin/entries")
 public class DevEntriesController extends BaseController
@@ -39,6 +43,7 @@ public class DevEntriesController extends BaseController
     /**
      * 查询作品管理列表
      */
+    @ApiOperation("查询作品管理列表")
     @PreAuthorize("@ss.hasPermi('admin:entries:list')")
     @GetMapping("/list")
     public TableDataInfo list(DevEntries devEntries)
@@ -67,6 +72,7 @@ public class DevEntriesController extends BaseController
     /**
      * 获取作品管理详细信息
      */
+    @ApiOperation("获取作品管理详细信息")
     @PreAuthorize("@ss.hasPermi('admin:entries:query')")
     @GetMapping(value = "/{entriesId}")
     public AjaxResult getInfo(@PathVariable("entriesId") Long entriesId)
@@ -77,6 +83,7 @@ public class DevEntriesController extends BaseController
     /**
      * 新增作品管理
      */
+    @ApiOperation("新增作品管理")
     @PreAuthorize("@ss.hasPermi('admin:entries:add')")
     @Log(title = "作品管理", businessType = BusinessType.INSERT)
     @PostMapping
@@ -88,6 +95,7 @@ public class DevEntriesController extends BaseController
     /**
      * 修改作品管理
      */
+    @ApiOperation("修改作品管理")
     @PreAuthorize("@ss.hasPermi('admin:entries:edit')")
     @Log(title = "作品管理", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -99,6 +107,7 @@ public class DevEntriesController extends BaseController
     /**
      * 删除作品管理
      */
+    @ApiOperation("删除作品管理")
     @PreAuthorize("@ss.hasPermi('admin:entries:remove')")
     @Log(title = "作品管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{entriesIds}")

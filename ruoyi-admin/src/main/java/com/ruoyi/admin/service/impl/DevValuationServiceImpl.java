@@ -127,20 +127,6 @@ public class DevValuationServiceImpl implements IDevValuationService
      */
     public void insertDevEntries(DevValuation devValuation)
     {
-        List<DevEntries> devEntriesList = devValuation.getDevEntriesList();
-        Long id = devValuation.getId();
-        if (StringUtils.isNotNull(devEntriesList))
-        {
-            List<DevEntries> list = new ArrayList<DevEntries>();
-            for (DevEntries devEntries : devEntriesList)
-            {
-                devEntries.setEntriesId(id);
-                list.add(devEntries);
-            }
-            if (list.size() > 0)
-            {
-                devValuationMapper.batchDevEntries(list);
-            }
-        }
+        devValuationMapper.insertDevValuation(devValuation);
     }
 }

@@ -2,6 +2,9 @@ package com.ruoyi.admin.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +30,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author 曾令根
  * @date 2024-06-04
  */
+@Api(tags = "账户管理接口")
 @RestController
 @RequestMapping("/admin/user")
 public class DevUserController extends BaseController
@@ -37,6 +41,7 @@ public class DevUserController extends BaseController
     /**
      * 查询账户管理列表
      */
+    @ApiOperation("查询账户管理列表")
     @PreAuthorize("@ss.hasPermi('admin:user:list')")
     @GetMapping("/list")
     public TableDataInfo list(DevUser devUser)
@@ -49,6 +54,7 @@ public class DevUserController extends BaseController
     /**
      * 导出账户管理列表
      */
+    @ApiOperation("导出账户管理列表")
     @PreAuthorize("@ss.hasPermi('admin:user:export')")
     @Log(title = "账户管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -62,6 +68,7 @@ public class DevUserController extends BaseController
     /**
      * 获取账户管理详细信息
      */
+    @ApiOperation("获取账户管理详细信息")
     @PreAuthorize("@ss.hasPermi('admin:user:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
@@ -72,6 +79,7 @@ public class DevUserController extends BaseController
     /**
      * 新增账户管理
      */
+    @ApiOperation("新增账户管理")
     @PreAuthorize("@ss.hasPermi('admin:user:add')")
     @Log(title = "账户管理", businessType = BusinessType.INSERT)
     @PostMapping
@@ -83,6 +91,7 @@ public class DevUserController extends BaseController
     /**
      * 修改账户管理
      */
+    @ApiOperation("修改账户管理")
     @PreAuthorize("@ss.hasPermi('admin:user:edit')")
     @Log(title = "账户管理", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -94,6 +103,7 @@ public class DevUserController extends BaseController
     /**
      * 删除账户管理
      */
+    @ApiOperation("删除账户管理")
     @PreAuthorize("@ss.hasPermi('admin:user:remove')")
     @Log(title = "账户管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")

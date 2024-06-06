@@ -121,20 +121,6 @@ public class DevEntriesServiceImpl implements IDevEntriesService
      */
     public void insertDevUser(DevEntries devEntries)
     {
-        List<DevUser> devUserList = devEntries.getDevUserList();
-        Long entriesId = devEntries.getEntriesId();
-        if (StringUtils.isNotNull(devUserList))
-        {
-            List<DevUser> list = new ArrayList<DevUser>();
-            for (DevUser devUser : devUserList)
-            {
-                devUser.setId(entriesId);
-                list.add(devUser);
-            }
-            if (list.size() > 0)
-            {
-                devEntriesMapper.batchDevUser(list);
-            }
-        }
+        devEntriesMapper.insertDevEntries(devEntries);
     }
 }

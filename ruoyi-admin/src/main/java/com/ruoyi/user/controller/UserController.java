@@ -10,6 +10,8 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.user.service.IUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,7 @@ import java.util.List;
  * @author 曾令根
  * @date 2024-06-05
  */
+@Api(tags = "用户端接口")
 @RestController
 @RequestMapping("/user/user")
 public class UserController extends BaseController {
@@ -44,6 +47,7 @@ public class UserController extends BaseController {
     /**
      * 用户登录
      */
+    @ApiOperation("用户登录")
     @PreAuthorize("@ss.hasPermi('user:user:login')")
     @PostMapping("/login")
     public AjaxResult list(@RequestBody DevUser devUser)
@@ -58,6 +62,7 @@ public class UserController extends BaseController {
     /**
      * 用户修改密码
      */
+    @ApiOperation("用户修改密码")
     @PreAuthorize("@ss.hasPermi('user:user:edit')")
     @Log(title = "用户信息修改", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -69,6 +74,7 @@ public class UserController extends BaseController {
     /**
      * 用户报名
      */
+    @ApiOperation("用户报名")
     @PreAuthorize("@ss.hasPermi('user:user:add')")
     @Log(title = "用户报名", businessType = BusinessType.INSERT)
     @PutMapping("/signup")
@@ -80,6 +86,7 @@ public class UserController extends BaseController {
     /**
      * 报名文件上传
      */
+    @ApiOperation("报名文件上传")
     @PreAuthorize("@ss.hasPermi('user:user:add')")
     @Log(title = "用户报名", businessType = BusinessType.INSERT)
     @PostMapping("/upload")
@@ -100,6 +107,7 @@ public class UserController extends BaseController {
     /**
      * 用户端作品列表
      */
+    @ApiOperation("用户端作品列表")
     @PreAuthorize("@ss.hasPermi('user:entries:list')")
     @GetMapping("/list")
     public TableDataInfo list(DevEntries devEntries)
@@ -112,6 +120,7 @@ public class UserController extends BaseController {
     /**
      * 用户端作品评价
      */
+    @ApiOperation("用户端作品评价")
     @PreAuthorize("@ss.hasPermi('user:valuation:add')")
     @Log(title = "用户端作品评价", businessType = BusinessType.INSERT)
     @PostMapping("/valuation")

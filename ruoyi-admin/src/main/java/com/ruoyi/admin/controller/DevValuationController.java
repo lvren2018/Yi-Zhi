@@ -4,6 +4,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.admin.domain.ValuationDTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +31,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @author 曾令根
  * @date 2024-06-05
  */
+@Api(tags = "评价管理接口")
 @RestController
 @RequestMapping("/admin/valuation")
 public class DevValuationController extends BaseController
@@ -39,6 +42,7 @@ public class DevValuationController extends BaseController
     /**
      * 查询评价管理列表
      */
+    @ApiOperation("查询评价管理列表")
     @PreAuthorize("@ss.hasPermi('admin:valuation:list')")
     @GetMapping("/list")
     public TableDataInfo list(DevValuation devValuation)
@@ -66,6 +70,7 @@ public class DevValuationController extends BaseController
     /**
      * 获取评价管理详细信息
      */
+    @ApiOperation("获取评价详细信息")
     @PreAuthorize("@ss.hasPermi('admin:valuation:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
@@ -76,6 +81,7 @@ public class DevValuationController extends BaseController
     /**
      * 新增评价管理
      */
+    @ApiOperation("新增评价")
     @PreAuthorize("@ss.hasPermi('admin:valuation:add')")
     @Log(title = "评价管理", businessType = BusinessType.INSERT)
     @PostMapping
@@ -87,6 +93,7 @@ public class DevValuationController extends BaseController
     /**
      * 修改评价管理
      */
+    @ApiOperation("修改评价")
     @PreAuthorize("@ss.hasPermi('admin:valuation:edit')")
     @Log(title = "评价管理", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -98,6 +105,7 @@ public class DevValuationController extends BaseController
     /**
      * 删除评价管理
      */
+    @ApiOperation("删除评价")
     @PreAuthorize("@ss.hasPermi('admin:valuation:remove')")
     @Log(title = "评价管理", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")

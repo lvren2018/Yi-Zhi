@@ -1,6 +1,8 @@
 package com.ruoyi.admin.domain;
 
 import java.util.List;
+
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -17,42 +19,48 @@ public class DevValuation extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 主键 */
+    @ApiModelProperty(value = "id")
     private Long id;
 
     /** 教学实施 */
+    @ApiModelProperty(value = "教学实施")
     @Excel(name = "教学实施")
     private Long teachingImplementationScore;
 
     /** 教案 */
+    @ApiModelProperty(value = "教案")
     @Excel(name = "教案")
     private Long teachingPlanScore;
 
     /** 视频资料 */
+    @ApiModelProperty(value = "视频资料")
     @Excel(name = "视频资料")
     private Long videoMaterialsScore;
 
     /** 专业人才培养方案 */
+    @ApiModelProperty(value = "专业人才培养方案")
     @Excel(name = "专业人才培养方案")
     private Long trainingPlanScore;
 
     /** 课程标准 */
     @Excel(name = "课程标准")
+    @ApiModelProperty(value = "课程标准")
     private Long curriculumCriterionScore;
 
     /** 教材选用 */
     @Excel(name = "教材选用")
+    @ApiModelProperty(value = "教材选用")
     private Long textbookSelectionScore;
 
     /** 作品ID */
+    @ApiModelProperty(value = "作品ID")
     @Excel(name = "作品ID")
     private Long entriesId;
 
     /** 评委名 */
+    @ApiModelProperty(value = "评委名")
     @Excel(name = "评委名")
     private String createName;
-
-    /** 作品管理信息 */
-    private List<DevEntries> devEntriesList;
 
     public void setId(Long id) 
     {
@@ -136,16 +144,6 @@ public class DevValuation extends BaseEntity
         return createName;
     }
 
-    public List<DevEntries> getDevEntriesList()
-    {
-        return devEntriesList;
-    }
-
-    public void setDevEntriesList(List<DevEntries> devEntriesList)
-    {
-        this.devEntriesList = devEntriesList;
-    }
-
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -159,7 +157,6 @@ public class DevValuation extends BaseEntity
             .append("createTime", getCreateTime())
             .append("entriesId", getEntriesId())
             .append("createName", getCreateName())
-            .append("devEntriesList", getDevEntriesList())
             .toString();
     }
 }

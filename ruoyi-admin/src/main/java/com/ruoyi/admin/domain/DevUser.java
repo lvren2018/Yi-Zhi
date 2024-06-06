@@ -1,5 +1,6 @@
 package com.ruoyi.admin.domain;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -16,34 +17,42 @@ public class DevUser extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 姓名 */
+    @ApiModelProperty(value = "姓名")
     @Excel(name = "姓名")
     private String name;
 
     /** 身份 */
+    @ApiModelProperty(value = "身份")
     @Excel(name = "身份")
     private String identity;
 
     /** 学校 */
+    @ApiModelProperty(value = "学校")
     @Excel(name = "学校")
     private String school;
 
     /** 账号名 */
+    @ApiModelProperty(value = "账号名")
     @Excel(name = "账号名")
     private String userName;
 
     /** 密码 */
+    @ApiModelProperty(value = "密码")
     @Excel(name = "密码")
     private String password;
 
     /** 团队成员 */
+    @ApiModelProperty(value = "团队成员")
     @Excel(name = "团队成员")
     private String team;
 
     /** 联系方式 */
-    @Excel(name = "联系方式")
+    @ApiModelProperty(value = "个人联系方式")
+    @Excel(name = "个人联系方式")
     private String phone;
 
     /** 参赛资格 */
+    @ApiModelProperty(value = "参赛资格")
     @Excel(name = "参赛资格")
     private int qualification;
 
