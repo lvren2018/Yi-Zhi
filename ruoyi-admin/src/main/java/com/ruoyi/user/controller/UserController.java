@@ -1,7 +1,9 @@
 package com.ruoyi.user.controller;
 
-import com.ruoyi.admin.domain.DevUser;
-import com.ruoyi.admin.domain.EnrollDTO;
+import com.ruoyi.admin.domain.*;
+import com.ruoyi.admin.mapper.DevValuationMapper;
+import com.ruoyi.admin.service.impl.DevEntriesServiceImpl;
+import com.ruoyi.admin.service.impl.DevValuationServiceImpl;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -31,6 +33,13 @@ public class UserController extends BaseController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private DevEntriesServiceImpl devEntriesService;
+
+    @Autowired
+    private DevValuationServiceImpl devValuationService;
+
 
     /**
      * 用户登录
@@ -87,4 +96,19 @@ public class UserController extends BaseController {
         }
         return success(filePath);
     }
+
+    /**
+     * 用户端作品列表
+     */
+    @PreAuthorize("@ss.hasPermi('user:entries:list')")
+    @GetMapping("/list")
+    public TableDataInfo list(DevEntries devEntries)
+    {
+        startPage();
+        List<EntriesDTO> list = devEntriesService.getList(devEntries);
+        return getDataTable(list);
+    }
+
+
 }
+

@@ -47,7 +47,6 @@ public class DevEntriesController extends BaseController
 //        List<DevEntries> list = devEntriesService.selectDevEntriesList(devEntries);
 //        return getDataTable(list);
         List<EntriesDTO> list = devEntriesService.getList(devEntries);
-        System.out.println("............................................." + list);
         return getDataTable(list);
 
     }
@@ -107,4 +106,6 @@ public class DevEntriesController extends BaseController
     {
         return toAjax(devEntriesService.deleteDevEntriesByEntriesIds(entriesIds));
     }
+
+
 }
